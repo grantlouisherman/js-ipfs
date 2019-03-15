@@ -97,6 +97,9 @@ exports.put = {
     } catch (err) {
       throw Boom.boomify(err, { message: 'Failed to put block' })
     }
+    if(request.query.pin){
+      await ipfs.pin.add(block.cid)
+    }
 
     return h.response({
       Key: cidToString(block.cid, { base: request.query['cid-base'] }),
