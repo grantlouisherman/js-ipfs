@@ -18,6 +18,17 @@ describe('block', () => runOnAndOff((thing) => {
     })
   })
 
+  it('put with pin flag', function () {
+    this.timeout(40 * 1000)
+    return ipfs('block put test/fixtures/test-data/hello --pin true').then((out) => {
+      ipfs('pin ls').then(pinset => {
+        console.log('TYPE', typeof(pinset))
+        console.log('PINSET', pinset)
+        expect(pinset.includes(out)).to.be.true
+      }).catch(err => console.log)
+    })
+  })
+
   it('put with flags, format and mhtype', function () {
     this.timeout(40 * 1000)
 
